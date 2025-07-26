@@ -1,0 +1,20 @@
+$duration: 0.5s;
+$delay-step: 0.2s;
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.box {
+  animation-name: fadeIn;
+  animation-duration: $duration;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
+
+  @for $i from 1 through 5 {
+    &-#{$i} {
+      animation-delay: $delay-step * $i;
+    }
+  }
+}
