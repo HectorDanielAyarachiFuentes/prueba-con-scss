@@ -1,5 +1,6 @@
-// scss/main.scss (Versión corregida sin advertencias)
+// scss/main.scss
 
+// Importamos el módulo de matemáticas de SASS
 @use "sass:math";
 
 // --- CONFIGURACIÓN Y VARIABLES ---
@@ -83,19 +84,32 @@ body:active .cursor-glow::after { transform: translate(-50%, -50%) scale(1); }
 }
 
 .hero {
-  height: 100vh; display: flex; justify-content: center; align-items: center;
-  text-align: center; position: relative; overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column; // Alinear contenido verticalmente
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  // ** LA CORRECCIÓN CLAVE ESTÁ AQUÍ **
+  // Añadimos padding para compensar la altura del header fijo
+  padding-top: to-rem(80); // Un valor fijo que funciona bien
+  padding-bottom: to-rem(80); // Un poco de espacio inferior también
+  box-sizing: border-box; // Asegura que el padding se incluya en la altura total
+
   &__title {
     font-family: $font-title; font-size: clamp(to-rem(48), 10vw, to-rem(120));
-    font-weight: 900; color: #fff;
+    font-weight: 900; color: #fff; line-height: 1.1;
     .word {
-      display: inline-block; transform: translateY(110%);
+      display: inline-block;
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
       span {
           display: block;
-          transform: translateY(-110%);
+          transform: translateY(110%);
           animation: reveal-word 1.5s $animation-timing forwards;
       }
+      // ¡BUCLE SCSS para escalonar la animación!
       @for $i from 1 through 3 {
         &:nth-child(#{$i}) span { animation-delay: #{$i * 0.2}s; }
       }
@@ -103,6 +117,7 @@ body:active .cursor-glow::after { transform: translate(-50%, -50%) scale(1); }
   }
   &__subtitle { margin: to-rem(20) 0; }
 
+  // ¡LA MAGIA DE SCSS! Generamos los blobs de fondo con un bucle
   &__background-blobs {
     $blob-count: 7;
     @for $i from 1 through $blob-count {
@@ -123,15 +138,12 @@ body:active .cursor-glow::after { transform: translate(-50%, -50%) scale(1); }
 .features {
   padding: to-rem(120) to-rem(48); position: relative; z-index: 1;
   .section-title {
-    font-family: $font-title; font-size: to-rem(56); text-align: center;
-    margin-bottom: to-rem(80);
+    font-family: $font-title; font-size: clamp(to-rem(40), 5vw, to-rem(56));
+    text-align: center; margin-bottom: to-rem(80);
     span {
         display: inline-block; background: $iridescent-gradient;
-        
-        // --- CORRECCIÓN AQUÍ ---
         -webkit-background-clip: text;
-        background-clip: text; // <-- LÍNEA AÑADIDA
-        
+        background-clip: text;
         color: transparent; background-size: 200%;
         animation: gradient-shift 5s ease infinite;
     }
@@ -142,15 +154,6 @@ body:active .cursor-glow::after { transform: translate(-50%, -50%) scale(1); }
   }
 }
 
-// [CÓDIGO ANTERIOR] ... No es necesario incluir todo el código de nuevo
-
-// NOTA: En la primera versión, el hero__title también usaba este efecto.
-// En la versión "Cyber-Floración" ya no lo usa, así que solo hay que
-// corregir el `.section-title`. Si en algún otro lugar usaste
-// `-webkit-background-clip: text;`, solo tienes que añadir debajo
-// `background-clip: text;` y la advertencia desaparecerá.
-
-// [RESTO DEL CÓDIGO] ...
 .card {
   background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
   border: 1px solid rgba(255, 255, 255, 0.1);
