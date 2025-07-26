@@ -3,79 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCSS: El Siguiente Nivel</title>
-    <link rel="stylesheet" href="css/main.css"> <!-- Enlazamos al CSS compilado -->
+    <title>SCSS: Sorpréndete</title>
+    <!-- 1. Enlazamos al CSS que se compilará -->
+    <link rel="stylesheet" href="css/main.css">
+    <!-- 2. Importamos las nuevas fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
 
+    <!-- Este es el div para el brillo que sigue al cursor -->
+    <div class="cursor-glow"></div>
+
     <header class="main-header">
-        <div class="container">
-            <nav class="main-nav">
-                <a href="#" class="nav-logo">SCSS_Power</a>
-                <ul class="nav-menu">
-                    <li><a href="#hero">Inicio</a></li>
-                    <li><a href="#features">Características</a></li>
-                    <li><a href="#contact">Contacto</a></li>
-                </ul>
-            </nav>
-        </div>
+        <a href="#" class="nav-logo">SCSS_CORE</a>
     </header>
 
     <main>
-        <section class="hero" id="hero">
+        <section class="hero">
             <div class="hero__content">
-                <h1 class="hero__title">SCSS al Siguiente Nivel</h1>
-                <p class="hero__subtitle">Una demostración de poder, elegancia y código organizado.</p>
-                <a href="#features" class="btn btn--primary">Descubre la Magia</a>
+                <h1 class="hero__title">
+                    <span class="word">Desata</span>
+                    <span class="word">el Poder</span>
+                    <span class="word">Real.</span>
+                </h1>
+                <p class="hero__subtitle" data-animate="fade-up" data-delay="0.5">Esto es SCSS. Más allá de las variables.</p>
+                <a href="#features" class="btn btn--pulse" data-animate="fade-up" data-delay="0.7"><span>Explora lo Imposible</span></a>
             </div>
+            <!-- SCSS creará los blobs de fondo mágicamente aquí -->
+            <div class="hero__background-blobs"></div>
         </section>
 
         <section class="features" id="features">
-            <div class="container">
-                <h2 class="section-title">Características Demostradas</h2>
-                <div class="features__grid">
-                    <!-- Cada tarjeta tendrá una animación de entrada escalonada gracias a un bucle SCSS -->
-                    <div class="card">
-                        <div class="card__icon">🎨</div>
-                        <h3 class="card__title">Variables & Mapas</h3>
-                        <p class="card__text">Tematización centralizada con un mapa de colores. Cambia un valor y todo el sitio se actualiza.</p>
+            <h2 class="section-title" data-animate="fade-up"><span>Capacidades Avanzadas</span></h2>
+            <div class="features__grid">
+                <div class="card" data-animate="bloom">
+                    <div class="card__glow"></div>
+                    <div class="card__content">
+                        <h3>Animación con `clip-path`</h3>
+                        <p>Las formas complejas y las transiciones "orgánicas" son posibles y fáciles de gestionar.</p>
                     </div>
-                    <div class="card">
-                        <div class="card__icon">📦</div>
-                        <h3 class="card__title">Nesting (Anidación)</h3>
-                        <p class="card__text">Código CSS que refleja la estructura HTML. Más limpio y fácil de leer y mantener.</p>
+                </div>
+                <div class="card" data-animate="bloom" data-delay="0.2">
+                     <div class="card__glow"></div>
+                    <div class="card__content">
+                        <h3>Bucles `@for` y `random()`</h3>
+                        <p>Genera animaciones complejas, grids y patrones sin repetir una sola línea de CSS.</p>
                     </div>
-                    <div class="card">
-                        <div class="card__icon">🔧</div>
-                        <h3 class="card__title">Mixins</h3>
-                        <p class="card__text">Bloques de estilos reutilizables para botones, flexbox, media queries y más. ¡No te repitas!</p>
+                </div>
+                <div class="card" data-animate="bloom" data-delay="0.4">
+                     <div class="card__glow"></div>
+                    <div class="card__content">
+                        <h3>Gradientes Iridiscentes</h3>
+                        <p>Crea efectos visuales vivos y dinámicos que reaccionan y cambian con el tiempo.</p>
                     </div>
-                    <div class="card">
-                        <div class="card__icon">📂</div>
-                        <h3 class="card__title">Partials & @use</h3>
-                        <p class="card__text">Organización modular del código en archivos pequeños y específicos. Escalabilidad profesional.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card__icon">✨</div>
-                        <h3 class="card__title">Bucles & Animación</h3>
-                        <p class="card__text">Generación dinámica de CSS. Las animaciones escalonadas de estas tarjetas se crean con un bucle @for.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card__icon">💡</div>
-                        <h3 class="card__title">Funciones</h3>
-                        <p class="card__text">Lógica y cálculos directamente en tu CSS. Usamos una función para convertir píxeles a rems.</p>
+                </div>
+                 <div class="card" data-animate="bloom" data-delay="0.6">
+                     <div class="card__glow"></div>
+                    <div class="card__content">
+                        <h3>Interactividad Avanzada</h3>
+                        <p>Efectos que responden al cursor del usuario para una experiencia mucho más inmersiva.</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="main-footer" id="contact">
-        <p>Creado con ❤️ y SCSS de alta calidad.</p>
-    </footer>
-
+    <!-- 3. ¡MUY IMPORTANTE! Añade esto antes de cerrar el </body> -->
+    <script src="js/main.js"></script>
 </body>
 </html>

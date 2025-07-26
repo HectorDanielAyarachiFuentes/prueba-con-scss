@@ -1,0 +1,94 @@
+// scss/_layout.scss
+
+// ¡CORREGIDO! Importamos tanto variables como mixins, ya que usamos ambos.
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.main-header {
+  padding: $spacing-unit * 1.5 0;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
+  background: rgba(color("background"), 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .nav-logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: color("primary");
+    text-decoration: none;
+  }
+
+  .nav-menu {
+    list-style: none;
+    display: flex;
+    gap: $spacing-unit * 2;
+    
+    a {
+      color: color("text-light");
+      text-decoration: none;
+      transition: color 0.3s ease;
+      &:hover {
+        color: color("primary");
+      }
+    }
+  }
+}
+
+.hero {
+  height: 100vh;
+  @include flex-center;
+  text-align: center;
+  padding: 0 2rem;
+  
+  &__content {
+    animation: fadeInUp 1s ease-out;
+  }
+
+  &__title {
+    font-size: clamp(3rem, 10vw, 5.5rem);
+    font-weight: 700;
+    background: linear-gradient(90deg, color("primary"), #fff, color("primary"));
+    background-size: 200% auto;
+    color: #fff;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-pan 3s linear infinite;
+  }
+
+  &__subtitle {
+    font-size: 1.25rem;
+    color: color("text-dark");
+    margin: $spacing-unit 0 $spacing-unit * 2;
+    max-width: 600px;
+  }
+}
+
+@keyframes gradient-pan {
+  from { background-position: 0% center; }
+  to { background-position: 200% center; }
+}
+
+.features {
+  padding: $spacing-unit * 5 0;
+  background-color: color("surface");
+
+  &__grid {
+    display: grid;
+    gap: $spacing-unit * 2;
+    grid-template-columns: repeat(auto-fit, minmax(to-rem(280), 1fr));
+  }
+}
+
+.main-footer {
+  text-align: center;
+  padding: $spacing-unit * 2;
+  color: color("text-dark");
+}

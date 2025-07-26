@@ -1,0 +1,32 @@
+// scss/_variables.scss
+@use "sass:math";
+
+// Fuentes
+$font-title: 'Orbitron', sans-serif;
+$font-body: 'Roboto', sans-serif;
+
+// Paleta de colores Cyber-Iridiscente
+$color-bg: #010409;
+$color-text: #c9d1d9;
+$color-primary: #f72585;
+$color-secondary: #7209b7;
+$color-accent: #3a0ca3;
+$color-highlight: #4cc9f0;
+
+// Gradiente principal
+$iridescent-gradient: linear-gradient(
+  135deg,
+  $color-primary,
+  $color-secondary,
+  $color-accent,
+  $color-highlight
+);
+
+// Función para convertir px a rem
+@function to-rem($px) {
+  @return math.div($px, 16) * 1rem;
+}
+
+// Configuración para animaciones
+$animation-duration: 0.8s;
+$animation-timing: cubic-bezier(0.16, 1, 0.3, 1); // Curva de easing suave y elástica

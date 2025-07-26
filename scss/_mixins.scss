@@ -1,0 +1,40 @@
+// scss/_mixins.scss
+
+// ¡CORREGIDO! Importamos las variables para poder usar el mapa de breakpoints.
+@use 'variables' as *;
+
+// Mixin para centrar elementos con Flexbox
+@mixin flex-center($direction: row) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: $direction;
+}
+
+// Mixin para Media Queries
+@mixin breakpoint($size) {
+  @if map-has-key($breakpoints, $size) {
+    @media (min-width: map-get($breakpoints, $size)) {
+      @content;
+    }
+  } @else {
+    @warn "Breakpoint '#{$size}' no encontrado.";
+  }
+}
+
+// Mixin para generar un estilo de botón base
+@mixin btn-style($bg-color, $text-color) {
+  display: inline-block;
+  padding: 0.8em 1.8em;
+  background-color: $bg-color;
+  color: $text-color;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba($bg-color, 0.3);
+  }
+}
