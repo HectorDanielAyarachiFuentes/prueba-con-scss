@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Animación con SCSS</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      background: #111;
-      color: white;
-      display: flex;
-      gap: 10px;
-      padding: 2em;
-    }
-
-    .box {
-      width: 50px;
-      height: 50px;
-      background: crimson;
-      opacity: 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCSS Superior: Menú Explosión Aurora</title>
+    <!-- Font Awesome para Iconos Profesionales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Nuestro CSS compilado -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="box box-1"></div>
-  <div class="box box-2"></div>
-  <div class="box box-3"></div>
-  <div class="box box-4"></div>
-  <div class="box box-5"></div>
+
+    <div class="bubble-container">
+      <!-- El gatillo que inicia la magia -->
+      <div class="bubble-trigger">
+        <div class="icon-wrapper">
+          <i class="fa-solid fa-bolt"></i>
+        </div>
+      </div>
+      
+      <!-- Las opciones que explotarán -->
+      <ul class="bubble-options">
+        <li><a href="#" data-tooltip="Crear"><i class="fa-solid fa-wand-magic-sparkles"></i></a></li>
+        <li><a href="#" data-tooltip="Explorar"><i class="fa-solid fa-compass"></i></a></li>
+        <li><a href="#" data-tooltip="Galería"><i class="fa-solid fa-images"></i></a></li>
+        <li><a href="#" data-tooltip="Notificaciones"><i class="fa-solid fa-bell"></i></a></li>
+        <li><a href="#" data-tooltip="Perfil"><i class="fa-solid fa-user-astronaut"></i></a></li>
+      </ul>
+    </div>
+
 </body>
 </html>

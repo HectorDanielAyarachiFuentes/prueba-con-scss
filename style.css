@@ -1,0 +1,109 @@
+.bubble-options li, .bubble-trigger {
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.4s ease-out;
+  position: absolute;
+}
+
+.bubble-container {
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.bubble-trigger {
+  width: 60px;
+  height: 60px;
+  background: #ff6b6b;
+  font-size: 2em;
+  z-index: 10;
+}
+.bubble-container:hover .bubble-trigger {
+  transform: rotate(45deg);
+  background: #ff3838;
+}
+
+.bubble-options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.bubble-options li {
+  width: 45px;
+  height: 45px;
+  top: 7.5px;
+  left: 7.5px;
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+}
+.bubble-options li a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 1.5em;
+}
+
+.bubble-container:hover .bubble-options li {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bubble-options li:nth-child(1) {
+  transition-delay: 0.05s;
+}
+.bubble-container:hover .bubble-options li:nth-child(1) {
+  transform: scale(1) translate(90px, 0px);
+}
+.bubble-options li:nth-child(1):hover {
+  background: #f06595;
+  transform: scale(1.1) translate(90px, 0px);
+}
+
+.bubble-options li:nth-child(2) {
+  transition-delay: 0.1s;
+}
+.bubble-container:hover .bubble-options li:nth-child(2) {
+  transform: scale(1) translate(27.8115294937px, 85.5950864666px);
+}
+.bubble-options li:nth-child(2):hover {
+  background: #f06595;
+  transform: scale(1.1) translate(27.8115294937px, 85.5950864666px);
+}
+
+.bubble-options li:nth-child(3) {
+  transition-delay: 0.15s;
+}
+.bubble-container:hover .bubble-options li:nth-child(3) {
+  transform: scale(1) translate(-72.8115294937px, 52.9006727063px);
+}
+.bubble-options li:nth-child(3):hover {
+  background: #f06595;
+  transform: scale(1.1) translate(-72.8115294937px, 52.9006727063px);
+}
+
+.bubble-options li:nth-child(4) {
+  transition-delay: 0.2s;
+}
+.bubble-container:hover .bubble-options li:nth-child(4) {
+  transform: scale(1) translate(-72.8115291208px, -52.9006726451px);
+}
+.bubble-options li:nth-child(4):hover {
+  background: #f06595;
+  transform: scale(1.1) translate(-72.8115291208px, -52.9006726451px);
+}
+
+.bubble-options li:nth-child(5) {
+  transition-delay: 0.25s;
+}
+.bubble-container:hover .bubble-options li:nth-child(5) {
+  transform: scale(1) translate(27.811734538px, -85.5950414952px);
+}
+.bubble-options li:nth-child(5):hover {
+  background: #f06595;
+  transform: scale(1.1) translate(27.811734538px, -85.5950414952px);
+}/*# sourceMappingURL=style.css.map */
