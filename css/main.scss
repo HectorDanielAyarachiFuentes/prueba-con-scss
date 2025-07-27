@@ -1,9 +1,12 @@
 // scss/main.scss
 
-// Importamos el módulo de matemáticas de SASS
+// =================================================================
+// 1. MÓDULOS Y CONFIGURACIÓN
+// =================================================================
+
 @use "sass:math";
 
-// --- CONFIGURACIÓN Y VARIABLES ---
+// --- Variables de Diseño ---
 $font-title: 'Orbitron', sans-serif;
 $font-body: 'Roboto', sans-serif;
 
@@ -15,16 +18,45 @@ $color-accent: #3a0ca3;
 $color-highlight: #4cc9f0;
 
 $iridescent-gradient: linear-gradient(135deg, $color-primary, $color-secondary, $color-accent, $color-highlight);
+
+// --- Variables de Animación ---
 $animation-duration: 0.8s;
 $animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
 
+// --- Función de Conversión a REM ---
 @function to-rem($px) {
   @return math.div($px, 16) * 1rem;
 }
 
-// --- ESTILOS BASE ---
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+// --- Función Generadora de Blobs ---
+// Genera una lista de sombras para el truco de `box-shadow`.
+@function create-blobs($n) {
+  $shadows: ();
+  @for $i from 1 through $n {
+    $x: random(100) + vw;
+    $y: random(100) + vh;
+    $blur: random(30) + 40px;
+    $spread: random(50) + 50px;
+    $color: hsla(random(360), 70%, 60%, 0.4);
+    $shadows: append($shadows, #{$x} #{$y} #{$blur} #{$spread} #{$color}, comma);
+  }
+  @return $shadows;
+}
+
+// =================================================================
+// 2. ESTILOS BASE Y GLOBALES
+// =================================================================
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: $color-bg;
   color: $color-text;
@@ -32,10 +64,18 @@ body {
   overflow-x: hidden;
   cursor: none;
 }
-a, button { cursor: none; }
 
-// --- EFECTO DE CURSOR ---
+a, button {
+  cursor: none;
+}
+
+// =================================================================
+// 3. COMPONENTES Y EFECTOS
+// =================================================================
+
+// --- Efecto de Cursor Personalizado ---
 .cursor-glow {
+  // ... (sin cambios, es bastante compatible)
   position: fixed; z-index: 9999;
   width: 24px; height: 24px;
   border: 2px solid $color-primary;
@@ -43,61 +83,81 @@ a, button { cursor: none; }
   pointer-events: none;
   transform: translate(-50%, -50%);
   transition: transform 0.2s ease-out, background-color 0.2s ease;
-  &::after {
-    content: ''; position: absolute;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba($color-primary, 0.1) 0%, transparent 70%);
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    top: 50%; left: 50%;
-    transition: transform 0.3s ease;
-  }
 }
 a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
   transform: translate(-50%, -50%) scale(2.5);
   background-color: rgba($color-primary, 0.5);
 }
-body:active .cursor-glow::after { transform: translate(-50%, -50%) scale(1); }
 
-// --- ANIMACIONES DE SCROLL ---
-[data-animate="fade-up"] {
-  opacity: 0; transform: translateY(40px);
+// --- Animaciones de Scroll ---
+[data-animate] {
+  opacity: 0; // Por defecto, los elementos animados están ocultos
+}
+.in-view {
+  opacity: 1; // La clase que JS añade para hacerlos visibles
+}
+
+[data-animate="fade-up"].in-view {
+  transform: translateY(0);
   transition: opacity $animation-duration $animation-timing, transform $animation-duration $animation-timing;
+}
+[data-animate="bloom"].in-view {
+  clip-path: circle(150% at 50% 50%);
+  transition: clip-path 1s $animation-timing;
+}
+
+// Fallback para navegadores que no animan `transform` o `clip-path`
+[data-animate] {
+  transition: opacity 0.8s ease;
+}
+
+[data-animate="fade-up"] {
+  transform: translateY(40px);
 }
 [data-animate="bloom"] {
   clip-path: circle(0% at 50% 50%);
-  transition: clip-path 1s $animation-timing;
-}
-.in-view {
-  opacity: 1; transform: translateY(0);
-  clip-path: circle(150% at 50% 50%);
 }
 
-// --- COMPONENTES Y LAYOUT ---
+// --- Header ---
 .main-header {
-  position: fixed; top: 0; left: 0; width: 100%;
-  padding: to-rem(24) to-rem(48); z-index: 100;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  padding: to-rem(24) to-rem(48);
+  z-index: 100;
+  // Fallback
+  background-color: rgba($color-bg, 0.5);
+  // Mejora progresiva con @supports
+  @supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
+    background-color: rgba($color-bg, 0.2);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
   .nav-logo {
     font-family: $font-title; font-weight: 900; font-size: to-rem(24);
     text-decoration: none; color: #fff; text-shadow: 0 0 10px $color-primary;
   }
 }
 
+// --- Sección Hero ---
 .hero {
   height: 100vh;
   display: flex;
-  flex-direction: column; // Alinear contenido verticalmente
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   position: relative;
   overflow: hidden;
-  // ** LA CORRECCIÓN CLAVE ESTÁ AQUÍ **
-  // Añadimos padding para compensar la altura del header fijo
-  padding-top: to-rem(80); // Un valor fijo que funciona bien
-  padding-bottom: to-rem(80); // Un poco de espacio inferior también
-  box-sizing: border-box; // Asegura que el padding se incluya en la altura total
+  padding: to-rem(80) 0;
+  box-sizing: border-box;
 
+  &__content {
+    position: relative;
+    z-index: 2;
+  }
+  
   &__title {
     font-family: $font-title; font-size: clamp(to-rem(48), 10vw, to-rem(120));
     font-weight: 900; color: #fff; line-height: 1.1;
@@ -107,61 +167,92 @@ body:active .cursor-glow::after { transform: translate(-50%, -50%) scale(1); }
       span {
           display: block;
           transform: translateY(110%);
-          animation: reveal-word 1.5s $animation-timing forwards;
+          transition: transform 1.5s $animation-timing;
       }
-      // ¡BUCLE SCSS para escalonar la animación!
       @for $i from 1 through 3 {
-        &:nth-child(#{$i}) span { animation-delay: #{$i * 0.2}s; }
+        &:nth-child(#{$i}) span {
+            transition-delay: #{$i * 0.2}s;
+        }
       }
     }
   }
+  .in-view &__title .word span, // Animación para cuando el hero está en vista
+  &__title .word span { // Animación para carga inicial
+     transform: translateY(0);
+  }
+
   &__subtitle { margin: to-rem(20) 0; }
 
-  // ¡LA MAGIA DE SCSS! Generamos los blobs de fondo con un bucle
   &__background-blobs {
-    $blob-count: 7;
-    @for $i from 1 through $blob-count {
-      &::before {
-        content: ''; position: absolute; z-index: -1;
-        $size: random(15) + 20vw;
-        width: $size; height: $size;
-        background: $iridescent-gradient; background-size: 400%;
-        border-radius: 100%; top: #{random(100)}vh; left: #{random(100)}vw;
-        filter: blur(100px); opacity: 0.5;
-        animation: move-blob 25s infinite alternate, gradient-shift 10s infinite alternate;
-        animation-delay: #{-$i * 2}s;
-      }
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      width: 1px; height: 1px;
+      animation: move-around 120s linear infinite;
+    }
+    &::before {
+      box-shadow: create-blobs(15);
+    }
+    &::after {
+      box-shadow: create-blobs(10);
+      animation-duration: 180s;
+      animation-direction: reverse;
     }
   }
 }
 
+// --- Sección Features ---
 .features {
-  padding: to-rem(120) to-rem(48); position: relative; z-index: 1;
+  padding: to-rem(120) to-rem(48);
+  position: relative;
+  z-index: 1;
+
   .section-title {
     font-family: $font-title; font-size: clamp(to-rem(40), 5vw, to-rem(56));
     text-align: center; margin-bottom: to-rem(80);
     span {
-        display: inline-block; background: $iridescent-gradient;
+      // Fallback para navegadores antiguos
+      color: $color-primary;
+      // Mejora progresiva para navegadores modernos
+      @supports (background-clip: text) or (-webkit-background-clip: text) {
+        display: inline-block;
+        background: $iridescent-gradient;
         -webkit-background-clip: text;
         background-clip: text;
-        color: transparent; background-size: 200%;
+        color: transparent;
+        background-size: 200%;
         animation: gradient-shift 5s ease infinite;
+      }
     }
   }
   &__grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(to-rem(280), 1fr));
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(to-rem(280), 1fr));
     gap: to-rem(32);
   }
 }
 
+// --- Tarjetas ---
 .card {
-  background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: to-rem(32); border-radius: 16px; backdrop-filter: blur(10px);
-  position: relative; overflow: hidden;
+  padding: to-rem(32);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  // Fallback
+  background-color: rgba(255, 255, 255, 0.05);
+  // Mejora progresiva con @supports
+  @supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
+    background-color: rgba(255, 255, 255, 0.02);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
   h3 { font-family: $font-title; color: #fff; margin-bottom: to-rem(12); }
+
   &__glow {
-    position: absolute; top: var(--y); left: var(--x);
+    position: absolute; top: var(--y, 0); left: var(--x, 0);
     width: 250px; height: 250px;
     background: radial-gradient($color-highlight, transparent 80%);
     opacity: 0; transform: translate(-50%, -50%);
@@ -170,14 +261,18 @@ body:active .cursor-glow::after { transform: translate(-50%, -50%) scale(1); }
   &:hover &__glow { opacity: 0.2; }
 }
 
+// --- Botón ---
 .btn--pulse {
+  // ... (sin cambios, es bastante compatible)
   position: relative; display: inline-block;
   padding: to-rem(16) to-rem(32);
   border: 1px solid $color-primary; border-radius: 50px;
   color: #fff; text-decoration: none; font-weight: bold;
-  overflow: hidden; transition: color 0.4s ease;
+  overflow: hidden; transition: color 0.4s ease, transform 0.3s ease;
   z-index: 1;
+
   span { position: relative; z-index: 2; }
+
   &::before {
     content: ''; position: absolute; top: 0; left: 0;
     width: 100%; height: 100%; background-color: $color-primary;
@@ -187,16 +282,20 @@ body:active .cursor-glow::after { transform: translate(-50%, -50%) scale(1); }
   }
   &:hover {
     color: $color-bg;
+    transform: scale(1.05);
     &::before { transform: scaleX(1); }
   }
 }
 
-// --- KEYFRAMES ---
-@keyframes reveal-word { to { transform: translateY(0); } }
-@keyframes move-blob {
-  from { transform: translate(0, 0) rotate(0deg) scale(1); }
-  to { transform: translate(random(10)-5vw, random(10)-5vh) rotate(180deg) scale(1.2); }
+// =================================================================
+// 4. KEYFRAMES DE ANIMACIÓN
+// =================================================================
+
+@keyframes move-around {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
+
 @keyframes gradient-shift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
