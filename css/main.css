@@ -39,29 +39,24 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
 
 [data-animate] {
   opacity: 0;
-  transition: opacity 0.8s ease;
-}
-
-.in-view {
-  opacity: 1;
+  visibility: hidden;
 }
 
 [data-animate=fade-up] {
   transform: translateY(40px);
-}
-
-[data-animate=fade-up].in-view {
-  transform: translateY(0);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-animate=bloom] {
   clip-path: circle(0% at 50% 50%);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), clip-path 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-[data-animate=bloom].in-view {
+.in-view {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
   clip-path: circle(150% at 50% 50%);
-  transition: clip-path 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .main-header {
@@ -146,10 +141,10 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
   animation: move-around 120s linear infinite;
 }
 .hero__background-blobs::before {
-  box-shadow: 75vw 3vh 66px 58px hsla(188, 70%, 60%, 0.4), 51vw 40vh 60px 52px hsla(307, 70%, 60%, 0.4), 20vw 5vh 52px 93px hsla(308, 70%, 60%, 0.4), 18vw 12vh 52px 98px hsla(288, 70%, 60%, 0.4), 4vw 45vh 64px 95px hsla(334, 70%, 60%, 0.4), 1vw 32vh 69px 51px hsla(51, 70%, 60%, 0.4), 34vw 64vh 67px 74px hsla(277, 70%, 60%, 0.4), 95vw 11vh 45px 87px hsla(48, 70%, 60%, 0.4), 79vw 48vh 51px 76px hsla(238, 70%, 60%, 0.4), 59vw 63vh 56px 97px hsla(308, 70%, 60%, 0.4), 1vw 69vh 62px 55px hsla(21, 70%, 60%, 0.4), 88vw 88vh 43px 78px hsla(165, 70%, 60%, 0.4), 6vw 92vh 43px 71px hsla(234, 70%, 60%, 0.4), 67vw 100vh 51px 68px hsla(7, 70%, 60%, 0.4), 28vw 30vh 51px 56px hsla(45, 70%, 60%, 0.4);
+  box-shadow: 97vw 23vh 57px 92px hsla(201, 70%, 60%, 0.4), 21vw 47vh 49px 96px hsla(326, 70%, 60%, 0.4), 21vw 19vh 45px 75px hsla(247, 70%, 60%, 0.4), 17vw 85vh 61px 92px hsla(21, 70%, 60%, 0.4), 81vw 52vh 52px 68px hsla(103, 70%, 60%, 0.4), 38vw 80vh 46px 76px hsla(71, 70%, 60%, 0.4), 55vw 68vh 57px 58px hsla(343, 70%, 60%, 0.4), 94vw 47vh 53px 61px hsla(200, 70%, 60%, 0.4), 97vw 13vh 63px 53px hsla(95, 70%, 60%, 0.4), 69vw 72vh 43px 80px hsla(177, 70%, 60%, 0.4), 71vw 52vh 60px 71px hsla(25, 70%, 60%, 0.4), 17vw 2vh 43px 69px hsla(309, 70%, 60%, 0.4), 25vw 79vh 50px 60px hsla(63, 70%, 60%, 0.4), 49vw 55vh 51px 66px hsla(137, 70%, 60%, 0.4), 66vw 87vh 43px 100px hsla(226, 70%, 60%, 0.4);
 }
 .hero__background-blobs::after {
-  box-shadow: 36vw 15vh 69px 94px hsla(140, 70%, 60%, 0.4), 98vw 100vh 56px 64px hsla(136, 70%, 60%, 0.4), 78vw 57vh 66px 57px hsla(31, 70%, 60%, 0.4), 91vw 14vh 70px 55px hsla(22, 70%, 60%, 0.4), 91vw 62vh 53px 87px hsla(1, 70%, 60%, 0.4), 82vw 9vh 41px 94px hsla(271, 70%, 60%, 0.4), 30vw 75vh 51px 64px hsla(94, 70%, 60%, 0.4), 10vw 57vh 55px 61px hsla(142, 70%, 60%, 0.4), 76vw 30vh 63px 65px hsla(17, 70%, 60%, 0.4), 18vw 7vh 46px 69px hsla(132, 70%, 60%, 0.4);
+  box-shadow: 58vw 13vh 47px 71px hsla(57, 70%, 60%, 0.4), 55vw 31vh 68px 99px hsla(103, 70%, 60%, 0.4), 68vw 70vh 55px 89px hsla(35, 70%, 60%, 0.4), 50vw 16vh 58px 100px hsla(257, 70%, 60%, 0.4), 66vw 85vh 58px 73px hsla(294, 70%, 60%, 0.4), 9vw 78vh 44px 62px hsla(318, 70%, 60%, 0.4), 95vw 54vh 50px 72px hsla(259, 70%, 60%, 0.4), 6vw 42vh 52px 82px hsla(330, 70%, 60%, 0.4), 41vw 56vh 63px 100px hsla(69, 70%, 60%, 0.4), 50vw 51vh 47px 51px hsla(298, 70%, 60%, 0.4);
   animation-duration: 180s;
   animation-direction: reverse;
 }

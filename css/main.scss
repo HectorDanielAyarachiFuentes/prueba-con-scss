@@ -9,33 +9,23 @@
 // --- Variables de Diseño ---
 $font-title: 'Orbitron', sans-serif;
 $font-body: 'Roboto', sans-serif;
-
 $color-bg: #010409;
 $color-text: #c9d1d9;
 $color-primary: #f72585;
 $color-secondary: #7209b7;
 $color-accent: #3a0ca3;
 $color-highlight: #4cc9f0;
-
 $iridescent-gradient: linear-gradient(135deg, $color-primary, $color-secondary, $color-accent, $color-highlight);
-
-// --- Variables de Animación ---
 $animation-duration: 0.8s;
 $animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
 
-// --- Función de Conversión a REM ---
-@function to-rem($px) {
-  @return math.div($px, 16) * 1rem;
-}
-
-// --- Función Generadora de Blobs ---
+// --- Funciones ---
+@function to-rem($px) { @return math.div($px, 16) * 1rem; }
 @function create-blobs($n) {
   $shadows: ();
   @for $i from 1 through $n {
-    $x: random(100) + vw;
-    $y: random(100) + vh;
-    $blur: random(30) + 40px;
-    $spread: random(50) + 50px;
+    $x: random(100) + vw; $y: random(100) + vh;
+    $blur: random(30) + 40px; $spread: random(50) + 50px;
     $color: hsla(random(360), 70%, 60%, 0.4);
     $shadows: append($shadows, #{$x} #{$y} #{$blur} #{$spread} #{$color}, comma);
   }
@@ -46,27 +36,13 @@ $animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
 // 2. ESTILOS BASE Y GLOBALES
 // =================================================================
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
-  background-color: $color-bg;
-  color: $color-text;
-  font-family: $font-body;
-  overflow-x: hidden;
-  cursor: none;
+  background-color: $color-bg; color: $color-text;
+  font-family: $font-body; overflow-x: hidden; cursor: none;
 }
-
-a, button {
-  cursor: none;
-}
+a, button { cursor: none; }
 
 // =================================================================
 // 3. COMPONENTES Y EFECTOS
@@ -74,12 +50,9 @@ a, button {
 
 // --- Efecto de Cursor Personalizado ---
 .cursor-glow {
-  position: fixed; z-index: 9999;
-  width: 24px; height: 24px;
-  border: 2px solid $color-primary;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
+  position: fixed; z-index: 9999; width: 24px; height: 24px;
+  border: 2px solid $color-primary; border-radius: 50%;
+  pointer-events: none; transform: translate(-50%, -50%);
   transition: transform 0.2s ease-out, background-color 0.2s ease;
 }
 a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
@@ -87,38 +60,41 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
   background-color: rgba($color-primary, 0.5);
 }
 
-// --- Animaciones de Scroll ---
+// ============================================================
+// --- ANIMACIONES DE SCROLL (VERSIÓN ROBUSTA Y CORREGIDA) ---
+// ============================================================
+
+// Estado inicial para TODOS los elementos que se animarán al hacer scroll
 [data-animate] {
   opacity: 0;
-  transition: opacity 0.8s ease;
-}
-.in-view {
-  opacity: 1;
+  visibility: hidden; // Empezamos completamente invisibles y sin afectar al layout
 }
 
+// Estado inicial específico para la animación "fade-up"
 [data-animate="fade-up"] {
   transform: translateY(40px);
-}
-[data-animate="fade-up"].in-view {
-  transform: translateY(0);
   transition: opacity $animation-duration $animation-timing, transform $animation-duration $animation-timing;
 }
 
+// Estado inicial específico para la animación "bloom"
 [data-animate="bloom"] {
   clip-path: circle(0% at 50% 50%);
+  transition: opacity 1s $animation-timing, clip-path 1s $animation-timing;
 }
-[data-animate="bloom"].in-view {
-  clip-path: circle(150% at 50% 50%);
-  transition: clip-path 1s $animation-timing;
+
+// Estado FINAL cuando el elemento entra en la vista (clase añadida por JS)
+.in-view {
+  opacity: 1;
+  visibility: visible; // Hacemos el elemento "real"
+  transform: translateY(0); // Vuelve a su posición para fade-up
+  clip-path: circle(150% at 50% 50%); // "Florece" para bloom
 }
+
 
 // --- Header ---
 .main-header {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  padding: to-rem(24) to-rem(48);
-  z-index: 100;
+  position: fixed; top: 0; left: 0; width: 100%;
+  padding: to-rem(24) to-rem(48); z-index: 100;
   background-color: rgba($color-bg, 0.5);
   @supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
     background-color: rgba($color-bg, 0.2);
@@ -133,26 +109,19 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
 
 // --- Sección Hero ---
 .hero {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  padding: to-rem(80) 0;
+  // ... (Sin cambios respecto a la versión anterior)
+  height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
+  position: relative; overflow: hidden; padding: to-rem(80) 0;
   box-sizing: border-box;
   &__content { z-index: 2; position: relative; }
   &__title {
     font-family: $font-title; font-size: clamp(to-rem(48), 10vw, to-rem(120));
     font-weight: 900; color: #fff; line-height: 1.1;
     .word {
-      display: inline-block;
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+      display: inline-block; clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
       span {
-        display: block;
-        transform: translateY(110%);
+        display: block; transform: translateY(110%);
         transition: transform 1.5s $animation-timing;
       }
       @for $i from 1 through 3 {
@@ -165,8 +134,7 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
   &__background-blobs {
     &::before, &::after {
       content: ''; position: absolute; left: 0; top: 0;
-      width: 1px; height: 1px;
-      animation: move-around 120s linear infinite;
+      width: 1px; height: 1px; animation: move-around 120s linear infinite;
     }
     &::before { box-shadow: create-blobs(15); }
     &::after {
@@ -179,9 +147,8 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
 
 // --- Sección Features ---
 .features {
-  padding: to-rem(120) to-rem(48);
-  position: relative;
-  z-index: 1;
+  // ... (Sin cambios respecto a la versión anterior)
+  padding: to-rem(120) to-rem(48); position: relative; z-index: 1;
   .section-title {
     font-family: $font-title; font-size: clamp(to-rem(40), 5vw, to-rem(56));
     text-align: center; margin-bottom: to-rem(80);
@@ -196,36 +163,25 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
     }
   }
   &__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(to-rem(280), 1fr));
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(to-rem(280), 1fr));
     gap: to-rem(32);
   }
 }
 
 // --- Tarjetas ---
 .card {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: to-rem(32);
-  border-radius: 16px;
-  position: relative;
-  overflow: hidden;
-  
-  // ========================================================
-  // === LA CORRECCIÓN PARA OPERA GX Y OTROS NAVEGADORES ===
-  transform: translateZ(0);
-  // ========================================================
-  
+  border: 1px solid rgba(255, 255, 255, 0.1); padding: to-rem(32);
+  border-radius: 16px; position: relative; overflow: hidden;
+  transform: translateZ(0); // Mantenemos el hack de aceleración por GPU
   background-color: rgba(255, 255, 255, 0.05);
   @supports (backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px)) {
     background-color: rgba(255, 255, 255, 0.02);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   }
   h3 { font-family: $font-title; color: #fff; margin-bottom: to-rem(12); }
   &__glow {
     position: absolute; top: var(--y, 0); left: var(--x, 0);
-    width: 250px; height: 250px;
-    background: radial-gradient($color-highlight, transparent 80%);
+    width: 250px; height: 250px; background: radial-gradient($color-highlight, transparent 80%);
     opacity: 0; transform: translate(-50%, -50%);
     transition: opacity 0.5s; pointer-events: none;
   }
@@ -234,8 +190,8 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
 
 // --- Botón ---
 .btn--pulse {
-  position: relative; display: inline-block;
-  padding: to-rem(16) to-rem(32);
+  // ... (Sin cambios respecto a la versión anterior)
+  position: relative; display: inline-block; padding: to-rem(16) to-rem(32);
   border: 1px solid $color-primary; border-radius: 50px;
   color: #fff; text-decoration: none; font-weight: bold;
   overflow: hidden; transition: color 0.4s ease, transform 0.3s ease;
@@ -249,8 +205,7 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
     z-index: 1;
   }
   &:hover {
-    color: $color-bg;
-    transform: scale(1.05);
+    color: $color-bg; transform: scale(1.05);
     &::before { transform: scaleX(1); }
   }
 }
@@ -260,11 +215,8 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
 // =================================================================
 
 @keyframes move-around {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from { transform: rotate(0deg); } to { transform: rotate(360deg); }
 }
-
 @keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; }
 }
