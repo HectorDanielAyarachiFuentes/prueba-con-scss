@@ -39,10 +39,15 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
 
 [data-animate] {
   opacity: 0;
+  transition: opacity 0.8s ease;
 }
 
 .in-view {
   opacity: 1;
+}
+
+[data-animate=fade-up] {
+  transform: translateY(40px);
 }
 
 [data-animate=fade-up].in-view {
@@ -50,21 +55,13 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+[data-animate=bloom] {
+  clip-path: circle(0% at 50% 50%);
+}
+
 [data-animate=bloom].in-view {
   clip-path: circle(150% at 50% 50%);
   transition: clip-path 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-[data-animate] {
-  transition: opacity 0.8s ease;
-}
-
-[data-animate=fade-up] {
-  transform: translateY(40px);
-}
-
-[data-animate=bloom] {
-  clip-path: circle(0% at 50% 50%);
 }
 
 .main-header {
@@ -105,8 +102,8 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
   box-sizing: border-box;
 }
 .hero__content {
-  position: relative;
   z-index: 2;
+  position: relative;
 }
 .hero__title {
   font-family: "Orbitron", sans-serif;
@@ -149,10 +146,10 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
   animation: move-around 120s linear infinite;
 }
 .hero__background-blobs::before {
-  box-shadow: 52vw 47vh 61px 99px hsla(24, 70%, 60%, 0.4), 36vw 34vh 43px 96px hsla(185, 70%, 60%, 0.4), 40vw 32vh 63px 74px hsla(176, 70%, 60%, 0.4), 95vw 16vh 47px 62px hsla(344, 70%, 60%, 0.4), 36vw 80vh 67px 96px hsla(194, 70%, 60%, 0.4), 78vw 57vh 45px 51px hsla(32, 70%, 60%, 0.4), 5vw 13vh 54px 95px hsla(236, 70%, 60%, 0.4), 5vw 8vh 59px 54px hsla(319, 70%, 60%, 0.4), 94vw 89vh 49px 87px hsla(7, 70%, 60%, 0.4), 99vw 89vh 53px 57px hsla(21, 70%, 60%, 0.4), 59vw 30vh 57px 79px hsla(153, 70%, 60%, 0.4), 22vw 35vh 70px 94px hsla(155, 70%, 60%, 0.4), 70vw 54vh 52px 66px hsla(51, 70%, 60%, 0.4), 77vw 66vh 41px 88px hsla(89, 70%, 60%, 0.4), 79vw 2vh 48px 95px hsla(261, 70%, 60%, 0.4);
+  box-shadow: 75vw 3vh 66px 58px hsla(188, 70%, 60%, 0.4), 51vw 40vh 60px 52px hsla(307, 70%, 60%, 0.4), 20vw 5vh 52px 93px hsla(308, 70%, 60%, 0.4), 18vw 12vh 52px 98px hsla(288, 70%, 60%, 0.4), 4vw 45vh 64px 95px hsla(334, 70%, 60%, 0.4), 1vw 32vh 69px 51px hsla(51, 70%, 60%, 0.4), 34vw 64vh 67px 74px hsla(277, 70%, 60%, 0.4), 95vw 11vh 45px 87px hsla(48, 70%, 60%, 0.4), 79vw 48vh 51px 76px hsla(238, 70%, 60%, 0.4), 59vw 63vh 56px 97px hsla(308, 70%, 60%, 0.4), 1vw 69vh 62px 55px hsla(21, 70%, 60%, 0.4), 88vw 88vh 43px 78px hsla(165, 70%, 60%, 0.4), 6vw 92vh 43px 71px hsla(234, 70%, 60%, 0.4), 67vw 100vh 51px 68px hsla(7, 70%, 60%, 0.4), 28vw 30vh 51px 56px hsla(45, 70%, 60%, 0.4);
 }
 .hero__background-blobs::after {
-  box-shadow: 38vw 46vh 67px 93px hsla(296, 70%, 60%, 0.4), 25vw 76vh 58px 56px hsla(226, 70%, 60%, 0.4), 32vw 24vh 57px 67px hsla(96, 70%, 60%, 0.4), 71vw 88vh 62px 58px hsla(311, 70%, 60%, 0.4), 34vw 58vh 54px 53px hsla(83, 70%, 60%, 0.4), 9vw 54vh 70px 98px hsla(23, 70%, 60%, 0.4), 39vw 67vh 51px 87px hsla(178, 70%, 60%, 0.4), 8vw 31vh 49px 60px hsla(50, 70%, 60%, 0.4), 2vw 94vh 47px 66px hsla(82, 70%, 60%, 0.4), 91vw 100vh 46px 68px hsla(107, 70%, 60%, 0.4);
+  box-shadow: 36vw 15vh 69px 94px hsla(140, 70%, 60%, 0.4), 98vw 100vh 56px 64px hsla(136, 70%, 60%, 0.4), 78vw 57vh 66px 57px hsla(31, 70%, 60%, 0.4), 91vw 14vh 70px 55px hsla(22, 70%, 60%, 0.4), 91vw 62vh 53px 87px hsla(1, 70%, 60%, 0.4), 82vw 9vh 41px 94px hsla(271, 70%, 60%, 0.4), 30vw 75vh 51px 64px hsla(94, 70%, 60%, 0.4), 10vw 57vh 55px 61px hsla(142, 70%, 60%, 0.4), 76vw 30vh 63px 65px hsla(17, 70%, 60%, 0.4), 18vw 7vh 46px 69px hsla(132, 70%, 60%, 0.4);
   animation-duration: 180s;
   animation-direction: reverse;
 }
@@ -194,6 +191,7 @@ a:hover ~ .cursor-glow, .btn:hover ~ .cursor-glow {
   border-radius: 16px;
   position: relative;
   overflow: hidden;
+  transform: translateZ(0);
   background-color: rgba(255, 255, 255, 0.05);
 }
 @supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) or (-webkit-backdrop-filter: blur(10px)) {
